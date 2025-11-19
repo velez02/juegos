@@ -58,7 +58,200 @@
                 </div>
             </div>
         </header>
+        <main class="flex-1">
+            <section class="max-w-7x1 mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2">
+                        <div class="rounded-2x1 overflow-hidden shadow-lg bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-white">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                                <div>
+                                    <h2 class="text-3x1 font-extrabold">Descubre tu proximo juego favorito</h2>
+                                    <p class="mt-2 text-lg text-white/90">Explora RPGs destacados, shooters, indies y más - listas curadas y proximos lanzamientos.</p>
+                                    <div class="mt-2 text-lg gap-3">
+                                        <a href="#catalog" class="inline-flex items-center px-4 py-2 bg-white/20 border border-white/30 text-white rounded-lg">Nuevos lanzamientos</a>
+                                    </div>
+                                </div>
+                                <div class="hidden md:block w-48">
+                                    <img src="https://placehold.co/800x400/6366f1/ffffff?text=Videojuegos" alt="videojuegos" class="rounded-lg shadow img-cover h-40 w-full" losding="lazy">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex items-center gap-3">
+                            <select id="platformFilter" class="rounded-md border px-3 py-2 bg-white dark:bg-gray-800">
+                                <option value="all">Todas las plataformas</option>
+                                <option>PC</option>
+                                <option>PlayStation</option>
+                                <option>Xbox</option>
+                                <option>Nintendo Switch</option>
+                            </select>
+                            <select id="genreFilter" class="rounded-md border px-3 py-2 bg-white dark:bg-gray-800">
+                                <option value="all">Todos los géneros</option>
+                                <option>RPG</option>
+                                <option>Shooter</option>
+                                <option>Indie</option>
+                                <option>Aventura</option>
+                                <option>Racer</option>
+                            </select>
+                            <button id="clearFilters" class="px-3 py-2 rounded-md border">Limpiar</button>
+                        </div>
+                        <select id="catalog" class="mt-6">
+                            <div id="gamesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                        </select>
+                    </div>
+                    <aside class="hidden lg:block">
+                        <div class="rounded-xl gb-white dark:bg-gray-800 p-4 shadow">
+                            <h3 class="text-lg font-semibold">Mejor valorados</h3>
+                            <ul id="toplist" class="mt-3 space-y-3 text-sm text-gray-600 dark:text-gray-300"></ul>
+                        </div>
+                        <div class="mt-4 rounded-xl bg-white dark:bg-gray-800 p-4 shadow">
+                            <h3 class="text-lg font-semibold">Proximamente</h3>
+                            <div class="mt-3 text-xs text-gray-600 dark:text-gray-300">Vuelve pronto para fechas de lanzamiento y anuncios.</div>
+                        </div>
+                    </aside>
+                </div>
+            </section>
+        </main>
+        <footer class="bg-white/60 dark:bg-gray-800/60 border-t border-gray-200 dark:border-gray-700">
+            <div class="max-w-7x1 mx-auto px-4 sm:px-6 lg:px-8 py-6 text-xs text-gray-500">
+                © 2025 Arcadia. Construido con Tailwind CSS
+            </div>
+        </footer>
     </div>
+    <div id="modal" class="fixed inset-0 bg-blsck/50 hidden items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-xl max-w-3x1 w-full overflow-hidden shadow-lg">
+            <div class="flex itemms-start justify-between p-4 border-b border-gray-100 dark:border-gray-700">
+                <h4 id="modalTitle" class="text-lg font-bold">Titulo del juego</h4>
+                <button id="closeModal" class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">X</button>
+            </div>
+            <div class="p-4 space-y-4">
+                <div class="flex gap-4">
+                    <img src="" id="modalImg" alt="portada" class="w-40 h-24 rounded-lg img-cover" loading="lazy">
+                    <div>
+                        <p id="modalDesc" class="text-sm text-gray-700 dark:text-gray-300"></p>
+                        <div class="mt-3 text-sm text-gray-700 dark:text-gray-400">Plataformas: <span id="modalPlatforms"></span></div>
+                    </div>
+                </div>
+                <div class="flex gap-3 justify-end">
+                    <button id="playNow" class="px-4 py-2 rounded-md bg-brand-500 text-white">Jugar demo</button>
+                    <button id="wishlist" class="px-4 py-2 rounded-md border">Añadir a deseos</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function getPlaceholderImg(title, genre) {
+            const colors = {
+                'RPG': '8b5cf6',
+                'Shooter': 'ef4444',
+                'Indie': '10b981',
+                'Aventura': '3b82f6',
+                'Racer': 'f59e0b',
+            };
+            const color = colors[genre] || '6b7280';
+            const text = encodeURICompwtwnt(title.substring(0, 15));
+            return  `https://placehold.co/400x200/${color}/ffffff?text=${text}`;
+        }
+        const games = [
+            {id: 1, title: `Elden Ruins`, genre: 'RPG', platform: ['PC', 'PlayStation'], rating: 9.2, img: getPlaceholderImg('Elden Ruins', 'RPG'), desc: 'Un RPG de acción de fantasía oxscura con una profunda narrativa.'},
+            {id: 2, title: 'Starfighter X', genre: 'Shooter', platform: ['PC', 'Xbox'], rating: 8.8, img: getPlaceholderImg('Starfighter X', 'Shooter'), desc: 'Shooter especial de ritmo rápido con multijugador.'},
+            {id: 3, title: 'Meadow Tale', genre: 'Indie', platform: ['PC', 'Nintendo Switch'], rating: 8.5, img: getPlaceholderImg('Meadow Tale', 'Indie'), desc: 'Aventura reconfortante y simulador de vida.'},
+            {id: 4, title: 'Cyber Drift', genre: 'Racer', platform: ['PC', 'PlayStation', 'Xbox'], rating: 8.9, img: getPlaceholderImg('Cyber Drift', 'Racer'), desc: 'Carreras arcade dcon estética neón.'},
+            {id: 5, title: 'Mystic Puzzles', genre: 'Aventure', platform: ['PC'], rating: 8.1, img: getPlaceholderImg('Mystic Puzzles', 'Aventure'), desc: 'Rompecabezas desafiantes en un mundo mágico.'},
+            {id: 6, title: 'Shadow Realm', genre: 'RPG', platforms: ['PC','PlayStation','Xbox'], rating: 9.0, img: getPlaceholderImg('Shadow Realm', 'RPG'), desc: 'RPG épico de fantasía con narrativa inmersiva.'},
+            {id: 7, title: 'Neon Warfare', genre: 'Shooter', platforms: ['PC','PlayStation'], rating: 8.7, img: getPlaceholderImg('Neon Warfare', 'Shooter'), desc: 'FPS futurista intenso con gráficos impresionantes.'},
+            {id: 8, title: 'Pixel Quest', genre: 'Indie', platforms: ['Switch','PC'], rating: 8.3, img: getPlaceholderImg('Pixel Quest', 'Indie'), desc: 'Plataformero estilo retro con mecánicas modernas.'},
+            {id: 9, title: 'Racing Legends', genre: 'Racer', platforms: ['PC','Xbox','PlayStation'], rating: 8.6, img: getPlaceholderImg('Racing Legends', 'Racer'), desc: 'Simulación de carreras realista con coches licenciados.'},
+            {id: 10, title: 'Dragon\'s Keep', genre: 'Adventure', platforms: ['PC','Switch'], rating: 8.4, img: getPlaceholderImg('Dragon\'s Keep', 'Adventure'), desc: 'Aventura épica a través de tierras místicas.'},
+            {id: 11, title: 'Battle Royale Arena', genre: 'Shooter', platforms: ['PC','PlayStation','Xbox','Switch'], rating: 9.1, img: getPlaceholderImg('Battle Royale', 'Shooter'), desc: 'Experiencia masiva de battle royale multijugador.'},
+            {id: 12, title: 'Crystal Chronicles', genre: 'RPG', platforms: ['PC','PlayStation'], rating: 8.9, img: getPlaceholderImg('Crystal Chronicles', 'RPG'), desc: 'JRPG con combate por turnos y narrativa rica.'},
+            {id: 13, title: 'Stardust Valley', genre: 'Indie', platforms: ['Switch','PC'], rating: 8.7, img: getPlaceholderImg('Stardust Valley', 'Indie'), desc: 'Encantador simulador de granja con elementos RPG.'},
+            {id: 14, title: 'Speed Demon', genre: 'Racer', platforms: ['PC','Xbox'], rating: 8.5, img: getPlaceholderImg('Speed Demon', 'Racer'), desc: 'Carreras arcade con nitro y acrobacias.'},
+            {id: 15, title: 'Mystic Realms', genre: 'Adventure', platforms: ['PC','PlayStation','Switch'], rating: 8.6, img: getPlaceholderImg('Mystic Realms', 'Adventure'), desc: 'Aventura centrada en la exploración con resolución de puzzles.'},
+            {id: 16, title: 'Warzone Tactics', genre: 'Shooter', platforms: ['PC','Xbox'], rating: 8.8, img: getPlaceholderImg('Warzone Tactics', 'Shooter'), desc: 'Shooter militar táctico con mecánicas de escuadrón.'},
+            {id: 17, title: 'Chrono Legends', genre: 'RPG', platforms: ['PC','PlayStation','Switch'], rating: 9.3, img: getPlaceholderImg('Chrono Legends', 'RPG'), desc: 'RPG de viajes en el tiempo con historias ramificadas.'},
+            {id: 18, title: 'Tiny Builders', genre: 'Indie', platforms: ['Switch','PC'], rating: 8.2, img: getPlaceholderImg('Tiny Builders', 'Indie'), desc: 'Juego creativo de construcción tipo sandbox.'},
+            {id: 19, title: 'Turbo Circuit', genre: 'Racer', platforms: ['PC','PlayStation','Xbox','Switch'], rating: 8.4, img: getPlaceholderImg('Turbo Circuit', 'Racer'), desc: 'Carreras futuristas con pistas que desafían la gravedad.'},
+            {id: 20, title: 'Lost Expedition', genre: 'Adventure', platforms: ['PC','Xbox'], rating: 8.3, img: getPlaceholderImg('Lost Expedition', 'Adventure'), desc: 'Aventura de supervivencia en territorios inexplorados.'},
+            {id: 21, title: 'Sniper Elite', genre: 'Shooter', platforms: ['PC','PlayStation','Xbox'], rating: 8.6, img: getPlaceholderImg('Sniper Elite', 'Shooter'), desc: 'Gameplay de francotirador basado en sigilo.'},
+            {id: 22, title: 'Magic Academy', genre: 'RPG', platforms: ['PC','Switch'], rating: 8.5, img: getPlaceholderImg('Magic Academy', 'RPG'), desc: 'RPG de escuela de magos con creación de hechizos.'},
+            {id: 23, title: 'Cozy Cottage', genre: 'Indie', platforms: ['Switch','PC'], rating: 8.8, img: getPlaceholderImg('Cozy Cottage', 'Indie'), desc: 'Relajante juego de simulación de vida.'},
+            {id: 24, title: 'Drift Masters', genre: 'Racer', platforms: ['PC','PlayStation'], rating: 8.7, img: getPlaceholderImg('Drift Masters', 'Racer'), desc: 'Simulador de campeonato de carreras de derrape.'},
+            {id: 25, title: 'Ancient Ruins', genre: 'Adventure', platforms: ['PC','PlayStation','Xbox'], rating: 8.9, img: getPlaceholderImg('Ancient Ruins', 'Adventure'), desc: 'Aventura de saqueo de tumbas con plataformas.'},
+            {id: 26, title: 'Space Marines', genre: 'Shooter', platforms: ['PC','Xbox'], rating: 8.5, img: getPlaceholderImg('Space Marines', 'Shooter'), desc: 'Shooter de ciencia ficción con invasiones alienígenas.'},
+            {id: 27, title: 'Fantasy Quest', genre: 'RPG', platforms: ['PC','PlayStation','Switch'], rating: 9.0, img: getPlaceholderImg('Fantasy Quest', 'RPG'), desc: 'RPG de fantasía clásico con sistema de grupo.'},
+            {id: 28, title: 'Retro Arcade', genre: 'Indie', platforms: ['Switch','PC'], rating: 8.1, img: getPlaceholderImg('Retro Arcade', 'Indie'), desc: 'Colección de mini-juegos inspirados en lo retro.'},
+            {id: 29, title: 'Formula Extreme', genre: 'Racer', platforms: ['PC','PlayStation','Xbox'], rating: 8.8, img: getPlaceholderImg('Formula Extreme', 'Racer'), desc: 'Carreras profesionales con física realista.'},
+            {id: 30, title: 'Mystery Island', genre: 'Adventure', platforms: ['PC','Switch'], rating: 8.4, img: getPlaceholderImg('Mystery Island', 'Adventure'), desc: 'Aventura de misterio point-and-click.'}
+        ];
+        const gamesGrid = document.getElementById('gamesGrid');
+        const toplist = document.getElementById('toplist');
+        function renderGames(list) {
+            games.innerHTML = '';
+            list.forEach(g => {
+                const card = document.createElement('article');
+                card.className = 'bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow hover:shadow-lg transition';
+                card.innerHTML = `
+                    <img src="${g.img}" alt="${g.title}" class="w-full h40 img-cover" loading="lazy">
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold">${g.title}</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">${g.genre} • ${g.platforms.join(', ')}</p>
+                        <div class="mt-3 flex items-center justify-between">
+                            <div class="text-sm text-gray-600 dark:text-gray-300">⭐ ${g.rating}</div>
+                            <div class="flex gap-2">
+                                <button data-id="${g.id}" class="openBtn px-3 py-1 rounded-md border text-sm">Detalles</button>
+                                <button class="px-3 py-1 rounded-md bg-gray-100 dark:bg-gray-700 text-sm">Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                gamesGrid.appendChild(card);
+            });
+            document.querySelectorAll('.openBtn').forEach(btn => btn.addEventListener('click', (e) => {
+                const id = +e.currentTarget.dataset.id;
+                openModal(id);
+            }));
+        }
+        function renderTop() {
+            topList.innerHTML = '';
+            const li = [...games].sort((a,b)=> b.rating - a.rating).slice(0.3);
+            top.forEach(g => {
+                const li = `<div class="flex items-center justify-between"><div>${g.title}</div><div class="text-sm text-gray-500">⭐ ${g.rating}</div></div>`;
+                topList.appendChild(li);
+            });
+        }
+        function openModal(id){
+            const g = games.find(x=>x.id===id);
+            if(!g) return;
+            document.getElementById('modalTitle').textContent = g.title;
+            document.getElementById('modalImg').src = g.img;
+            document.getElementById('modalDesc').textContent = g.desc;
+            document.getElementById('modalPlatforms').textContent = g.platforms.join(', ');
+            document.getElementById('modal').classList.remove('hidden');
+            document.getElementById('modal').classList.add('flex');
+        }
+        document.getElementById('closeModal').addEventListener('click', ()=>{
+            document.getElementById('modal').classList.add('hidden');
+            document.getElementById('modal').classList.remove('flex');
+        });
+        const searchInput = document.getElementById('search');
+        const platformFilter = document.getElementById('platformFilter');
+        const genreFilter = document.getElementById('genreFilter');
+        const clearFilter = document.getElementById('clearFilter');
+        function applyFilters(){
+            const q = searchInput.value.toLowerCase();
+            const p = platformFilter.value;
+            const g = genreFilter.value;
+            let filtered = games.filte(game => {
+                const matchesQ = !q || games.title.toLowerXase().includes(q) || game.genre.toLowerCase().includes(q);
+                const matchesP = p === 'all' || game.platforms.includes(p);
+                const matchesG = g === 'all' || games.genre === g;
+                return matchesQ && matchesP && matchesG;
+            });
+            renderGames(filtered);
+        }
+        searchInput.addEventListener('input', applyFilters);
+        platformFilter.addEventListener()
+    </script>
 
   </body>
 </html>
