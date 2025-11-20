@@ -250,8 +250,19 @@
             renderGames(filtered);
         }
         searchInput.addEventListener('input', applyFilters);
-        platformFilter.addEventListener()
+        platformFilter.addEventListener('change', applyFilters);
+        genreFilter.addEventListener('change', applyFilters);
+        clearFilter.addEventListener('click', ()=>{searchInput.value='';
+            platformFilter.value='all';
+            genreFilter.value='all';
+            applyFilters();
+        });
+        const darkToggle = document.getElementById('darkToggle');
+        darkToggle.addEventListener('click', ()=>{
+            document.documentElement.classList.toggle('click');
+        });
+        renderGames(games);
+        renderTop();
     </script>
-
   </body>
 </html>
